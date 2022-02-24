@@ -1,0 +1,50 @@
+1.Реализовать в программе шифрование и дешифрацию содержимого файла по методу Цезаря с ключевым словом. 
+(С+)
+const alf='ABCDEFGHIJKLMNOPQRSTUVWXYZ';//алфавит
+var
+  Form1: TForm1;
+  s,s1:string;
+implementation
+ 
+{$R *.dfm}
+ 
+procedure TForm1.Button1Click(Sender: TObject);
+var k,i,j:integer;
+    kl,s2:string;
+begin
+s:=AnsiUpperCase(Edit1.Text);
+kl:=AnsiUpperCase(Edit1.Text);
+Val(Edit3.Text,k,i);
+if(i<>0)or not(k in [0..24])then
+ begin
+   ShowMessage('Неверно введено смещение');
+   Edit3.Clear;
+   Edit3.SetFocus;
+   Exit;
+ end;
+s1:=kl; //пишем в строку ключ
+for i:=1 to k do s1:=' '+s1;//в начало 17 пробелов
+s2:='';//алфавит без букв ключевого слова
+for i:=1 to 26 do
+if pos(alf[i],kl)=0 then s2:=s2+alf[i];
+i:=length(s1)+1;//конец строки+1
+j:=length(s1);//длина строки
+while length(s1)<=26 do //пока не 26
+ begin
+  s1:=s1+s2[i-j];//добавляем первые буквы алфавита
+  i:=i+1;
+ end;
+while s1[1]=' ' do delete(s1,1,1);
+s1:=copy(s2,i-j,length(s2))+s1;
+//шифрование
+for i:=1 to length(s) do
+s[i]:=s1[pos(s[i],alf)];
+Edit4.Text:=s;
+end;
+procedure TForm1.Button2Click(Sender: TObject);
+var i:Integer;
+begin
+for i:=1 to length(s) do
+s[i]:=alf[pos(s[i],s1)];
+Edit5.Text:=s;
+end;

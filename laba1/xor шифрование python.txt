@@ -1,0 +1,36 @@
+# Составляем словарь
+def form_dict():
+    alphabet = list(ascii_letters) + list(digits)
+    return dict([(i, alphabet[i]) for i in range(len(alphabet))])
+
+# Разбираем слово и ключ
+def encode_val(word):
+    d = form_dict()
+    return [k for c in word for k, v in d.items() if v == c]
+
+# Шифруем слово:
+def comparator(value, key):
+    return dict([(index, list(character))
+                 for index, character in enumerate(zip(value, cycle(key)))])
+
+def full_encode(value, key):
+    d = comparator(value, key)
+    l = len(form_dict())
+    return [(v[0] ^ v[1]) % l for v in d.values()]
+
+def full_decode(value, key):
+    d = comparator(value, key)
+    l = len(form_dict())
+    return [(v[0] - v[1]) % l for v in d.values()]
+
+#шифруем
+word = 'habrahabrru'
+key = 'occaZZion9'
+print 'Слово: ' + word
+print 'Ключ: ' + key
+key_encoded = encode_val(key)
+value_encoded = encode_val(word)
+encoded_text = full_encode(value_encoded, key_encoded)
+
+#пытаемся расшифровать
+decoded = full_decode(encoded_text, key_encoded)

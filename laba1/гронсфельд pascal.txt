@@ -1,0 +1,54 @@
+program Kriptograf; 
+ 
+function Shifr ( Kod, K : string ): string; 
+    var i,t,d : integer; 
+    begin 
+        for i :=1 to length (Kod) do begin 
+            d :=ord (Kod[i]); 
+            t := (ord(Kod[i]) + (ord (K [(pred(i) mod length(K)) + 1]) - ord('0')));
+            if t >= 256 then 
+                dec (T,256); 
+            Kod[i]:= Chr(t); 
+        end; 
+        Shifr := Kod; 
+    end;
+ 
+var a,k,s: string;
+ 
+Begin
+ 
+    writeln('vvedite slovo'); 
+    readln(a); 
+    writeln('vvedite klu4'); 
+    readln(k); 
+    s:= Shifr(a,k); 
+    writeln('s= ', Shifr (a, k)); 
+    readln; 
+End.
+ 
+//расшифровывающая 
+program Kriptograf;
+ 
+function DeShifr (DeKod,K:string):string; 
+    var i,t:integer; 
+    begin 
+        for i:=1 to length(DeKod) do begin 
+            t:=(Ord(DeKod[i])-(ord(K[(pred(i) mod length(K))+1])-ord('0')));
+            if t<0 then 
+                Inc(t,256); 
+            DeKod[i]:=Chr(t); 
+        end; 
+        DeShifr:=DeKod; 
+    end;
+ 
+var a,k,s:string;
+ 
+Begin 
+    writeln('vvedite zashifrovannui text'); 
+    readln(a); 
+    writeln('vvedite klu4'); 
+    readln(k); 
+    s:= DeShifr(a ,k );
+    writeln('s= ', DeShifr (a,k)); 
+    readln; 
+End.
